@@ -26,6 +26,16 @@ const ProductDetail = () => {
 
   console.log(productsFound);
 
+  const [ quantity, setQuantity ] = useState("");
+
+  const addToCart = () => {
+    const products = {
+      products: productsFound.id,
+      quantity: quantity
+    }
+    console.log(products);
+  }
+
   return (
     <div>
       <h1 className="product-detail-h1">{productsFound?.title}</h1>
@@ -48,9 +58,12 @@ const ProductDetail = () => {
                 ${productsFound?.price}
               </span>
             </Col>
-            <Col>Quantity</Col>
+            <Col>
+              Quantity
+              <input type="number" min={1} max={20} value={quantity} onChange={e => setQuantity(e.target.value)}/>
+            </Col>
           </Row>
-          <Button variant="danger" style={{ marginTop: "1rem", width: "100%" }}>
+          <Button onClick={addToCart} variant="danger" style={{ marginTop: "1rem", width: "100%" }}>
             Add to cart
           </Button>
         </Col>
@@ -58,7 +71,7 @@ const ProductDetail = () => {
       <Row xs={1}>
         <h3 style={{ paddingTop: "2.5rem" }}>Related Products:</h3>
         {relatedProducts.map((productsItem) => (
-          <Col md={4}>
+          <Col md={4} key={productsItem.id}>
             <Card className="product-detail-card">
               <Link
                 to={`/products/${productsItem.id}`}

@@ -16,10 +16,10 @@ const Purchases = () => {
     <div>
       <h1>Purchases</h1>
       {purchases.map((purchase) => (
-        <ul>
+        <ul key={purchase.id}>
           {purchase.cart.products.map((purchaseItem) => (
-            <Link to={`/products/${purchaseItem.id}`}>
-              <li key={purchaseItem.id}>{purchaseItem.title}</li>
+            <Link key={purchaseItem.id} to={`/products/${purchaseItem.id}`}>
+              <li>{purchaseItem.title}</li>
             </Link>
           ))}
         </ul>
