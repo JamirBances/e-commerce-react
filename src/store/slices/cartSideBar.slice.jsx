@@ -20,6 +20,21 @@ export const getCartThunk = () => (dispatch) => {
         .finally(() => dispatch(setIsLoading(false)));
 }
 
+export const createPurchasesThunk = (products) => (dispatch) => {
+  dispatch(setIsLoading(true));
+  return axios.post('https://e-commerce-api.academlo.tech/api/v1/cart', products, getConfig())
+      .then(() => dispatch(getCartThunk()))
+      .finally(() => dispatch(setIsLoading(false)));
+}
+
+export const checkoutCartThunk = () => (dispatch) => {
+    dispatch(setIsLoading(true));
+    return axios.post('https://e-commerce-api.academlo.tech/api/v1/purchases', {}, getConfig())
+        .then(() => dispatch(setCartSideBar([])))
+        /* .catch((error) => console.log(error.response.data)) */
+        .finally(() => dispatch(setIsLoading(false)));
+}
+
 export const { setCartSideBar } = cartSideBarSlice.actions;
 
 export default cartSideBarSlice.reducer;
