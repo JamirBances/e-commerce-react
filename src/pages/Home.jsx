@@ -1,21 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  InputGroup,
-  ListGroup,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, Col, Form, InputGroup, ListGroup, Row} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  filterDetailProductsThunk,
-  filterProductsThunk,
-  getProductsThunk,
-} from "../store/slices/products.slice";
+import { filterDetailProductsThunk, filterName, filterProductsThunk, getProductsThunk } from "../store/slices/products.slice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -63,9 +51,9 @@ const Home = () => {
             />
             <Button
               variant="outline-secondary"
-              onClick={() => dispatch(filterDetailProductsThunk(inputSearch))}
+              onClick={() => dispatch(filterName(inputSearch))}
             >
-              Search
+              Search <i className="fa-solid fa-magnifying-glass"></i>
             </Button>
           </InputGroup>
           <Row xs={1} md={2} xl={3} className="g-4">

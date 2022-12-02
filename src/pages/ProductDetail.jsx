@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { createPurchasesThunk } from "../store/slices/cartSideBar.slice";
 import { getProductsThunk } from "../store/slices/products.slice";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -25,17 +26,22 @@ const ProductDetail = () => {
       productsItem?.id !== productsFound?.id
   );
 
-  console.log(productsFound);
+  /* console.log(productsFound); */
 
   const [ quantity, setQuantity ] = useState("");
 
   const addToCart = () => {
-    const products = {
-      id: productsFound.id,
-      quantity: quantity
+    const token = localStorage.getItem("token");
+    if (token) {
+      const products = {
+        id: productsFound.id,
+        quantity: quantity
+      }
+      dispatch(createPurchasesThunk(products))
+      console.log(products);
+    }else{
+      navigate("/login")
     }
-    dispatch(createPurchasesThunk(products))
-    console.log(products);
   }
 
   return (

@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartSideBar from "./CartSideBar";
 
 const NavBar = () => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setShow(true);
+    }else{
+      navigate("/login")
+    }
+  }
 
   return (
     <>
@@ -20,12 +28,14 @@ const NavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/login">
-                Login
+                <i className="fa-solid fa-user"></i>{" "}Login
               </Nav.Link>
               <Nav.Link as={Link} to="/purchases">
-                Purchases
+                <i className="fa-solid fa-basket-shopping"></i>{" "}Purchases
               </Nav.Link>
-              <Nav.Link onClick={handleShow}>Cart</Nav.Link>
+              <Nav.Link onClick={handleShow}>
+                <i className="fa-solid fa-cart-shopping"></i>{" "}Cart
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

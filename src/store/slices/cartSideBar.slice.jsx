@@ -35,6 +35,8 @@ export const checkoutCartThunk = () => (dispatch) => {
         .finally(() => dispatch(setIsLoading(false)));
 }
 
+
+
 export const { setCartSideBar } = cartSideBarSlice.actions;
 
 export default cartSideBarSlice.reducer;

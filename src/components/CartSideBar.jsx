@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Col, Container, Offcanvas, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  checkoutCartThunk,
-  getCartThunk,
-} from "../store/slices/cartSideBar.slice";
+import { checkoutCartThunk, getCartThunk } from "../store/slices/cartSideBar.slice";
 
 const CartSideBar = ({ handleClose, show }) => {
   const dispatch = useDispatch();
@@ -18,11 +15,11 @@ const CartSideBar = ({ handleClose, show }) => {
   return (
     <Offcanvas show={show} onHide={handleClose}>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Cart</Offcanvas.Title>
+        <Offcanvas.Title><i className="fa-solid fa-cart-shopping"></i> Cart</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="cart-side-bar-body">
         {carts.map((cart) => (
-          <Container className="cart-side-bar-body-container">
+          <Container key={cart.id} className="cart-side-bar-body-container">
             <Row>
               <Col sm={8}>{cart.title}</Col>
               <Col sm={4}>Delete</Col>
@@ -35,7 +32,7 @@ const CartSideBar = ({ handleClose, show }) => {
             </Row>
           </Container>
         ))}
-        <Button onClick={() => dispatch(checkoutCartThunk())}>Checkout</Button>
+        <Button onClick={() => dispatch(checkoutCartThunk())}>Checkout <i className="fa-solid fa-receipt"></i></Button>
       </Offcanvas.Body>
     </Offcanvas>
   );

@@ -9,7 +9,12 @@ export const productSlice = createSlice({
     setProducts: (state, action) => {
       return action.payload;
     },
-  },
+    filterName: (state, action) => {
+      const inputSearch = action.payload
+      console.log(inputSearch);
+      return state.filter(product => product.title.toLowerCase().includes(inputSearch.toLowerCase()))
+    }
+  }
 });
 
 export const getProductsThunk = () => (dispatch) => {
@@ -27,12 +32,12 @@ export const filterProductsThunk = (categoryId) => (dispatch) => {
 };
 
 export const filterDetailProductsThunk = (inputSearch) => (dispatch) => {
-    dispatch(setIsLoading(true));
-    return axios.get(`https://e-commerce-api.academlo.tech/api/v1/products?query=${inputSearch}`)
-        .then((res) => dispatch(setProducts(res.data.data.products)))
-        .finally(() => dispatch(setIsLoading(false)));
+  dispatch(setIsLoading(true));
+  return axios.get(`https://e-commerce-api.academlo.tech/api/v1/products?query=${inputSearch}`)
+    .then((res) => dispatch(setProducts(res.data.data.products)))
+    .finally(() => dispatch(setIsLoading(false)));
 }
 
-export const { setProducts } = productSlice.actions;
+export const { setProducts, filterName } = productSlice.actions;
 
 export default productSlice.reducer;
