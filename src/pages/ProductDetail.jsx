@@ -66,7 +66,7 @@ const ProductDetail = () => {
                 ${productsFound?.price}
               </span>
             </Col>
-            <Col>
+            <Col className="product-detail-quantity">
               Quantity
               <input type="number" min={1} max={20} value={quantity} onChange={e => setQuantity(e.target.value)}/>
             </Col>

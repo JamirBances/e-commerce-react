@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Offcanvas, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { checkoutCartThunk, getCartThunk } from "../store/slices/cartSideBar.slice";
+import {
+  checkoutCartThunk,
+  getCartThunk,
+} from "../store/slices/cartSideBar.slice";
 
 const CartSideBar = ({ handleClose, show }) => {
   const dispatch = useDispatch();
@@ -12,27 +15,48 @@ const CartSideBar = ({ handleClose, show }) => {
 
   const carts = useSelector((state) => state.cart);
 
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    carts.forEach((cartProduct) => {
+      total += cartProduct.price * cartProduct.productsInCart.quantity;
+    });
+    setTotalPrice(total);
+  }, [carts]);
+
   return (
     <Offcanvas show={show} onHide={handleClose}>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title><i className="fa-solid fa-cart-shopping"></i> Cart</Offcanvas.Title>
+        <Offcanvas.Title>
+          <i className="fa-solid fa-cart-shopping"></i> Cart
+        </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="cart-side-bar-body">
-        {carts.map((cart) => (
-          <Container key={cart.id} className="cart-side-bar-body-container">
-            <Row>
-              <Col sm={8}>{cart.title}</Col>
-              <Col sm={4}>Delete</Col>
-            </Row>
-            <Row>
-              <Col sm={8}>Quantity: {cart.productsInCart.quantity}</Col>
-            </Row>
-            <Row>
-              <Col sm={12}>Total: <b>${cart.productsInCart.quantity * cart.price}</b></Col>
-            </Row>
-          </Container>
-        ))}
-        <Button onClick={() => dispatch(checkoutCartThunk())}>Checkout <i className="fa-solid fa-receipt"></i></Button>
+        <div className="cart-side-bar-body-container">
+          {carts.map((cart) => (
+            <Container key={cart.id} className="cart-side-bar-body-products">
+              <Row>
+                <Col sm={8}>{cart.title}</Col>
+                <Col sm={4}>Delete</Col>
+              </Row>
+              <Row>
+                <Col sm={12}>
+                  Quantity: {cart.productsInCart.quantity}
+                  <b>Total: ${cart.productsInCart.quantity * cart.price}</b>
+                </Col>
+              </Row>
+            </Container>
+          ))}
+        </div>
+        <div className="cart-side-bar-body-button">
+          <p>
+            Total: $<span>{totalPrice}</span>
+          </p>
+          <Button onClick={() => dispatch(checkoutCartThunk())}>
+            Checkout <i className="fa-solid fa-receipt"></i>
+          </Button>
+        </div>
       </Offcanvas.Body>
     </Offcanvas>
   );
