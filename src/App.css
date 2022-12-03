@@ -129,7 +129,9 @@
 }
 
 .product-detail-img{
+  height: 400px;
   width: 400px;
+  object-fit: contain;
 }
 
 .product-detail-description-container{
