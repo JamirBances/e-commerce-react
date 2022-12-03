@@ -33,8 +33,8 @@ const Login = () => {
           Test data:
         </p>
         <div>
-          <p><i class="fa-solid fa-envelope"></i> Email: testjamir@gmail.com</p>
-          <p><i class="fa-solid fa-lock"></i> Password: test1234</p>
+          <p><i className="fa-solid fa-envelope"></i> Email: testjamir@gmail.com</p>
+          <p><i className="fa-solid fa-lock"></i> Password: test1234</p>
         </div>
       </div>
       <Form.Group className="mb-3" controlId="formBasicEmail">

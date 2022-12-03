@@ -55,7 +55,7 @@ const ProductDetail = () => {
             className="product-detail-img"
           />
         </Col>
-        <Col>
+        <Col className="product-detail-description-container">
           <p className="product-detail-description">
             {productsFound?.description}
           </p>
