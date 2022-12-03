@@ -122,6 +122,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.carousel.slide{
+  text-align: center;
+  width: 100%;
+}
+
 .product-detail-img{
   width: 400px;
 }

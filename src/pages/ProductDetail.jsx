@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Carousel, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { createPurchasesThunk } from "../store/slices/cartSideBar.slice";
@@ -28,32 +28,50 @@ const ProductDetail = () => {
 
   /* console.log(productsFound); */
 
-  const [ quantity, setQuantity ] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   const addToCart = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const products = {
         id: productsFound.id,
-        quantity: quantity
-      }
-      dispatch(createPurchasesThunk(products))
+        quantity: quantity,
+      };
+      dispatch(createPurchasesThunk(products));
       console.log(products);
-    }else{
-      navigate("/login")
+    } else {
+      navigate("/login");
     }
-  }
+  };
 
   return (
     <div>
       <h1 className="product-detail-h1">{productsFound?.title}</h1>
       <Row xs={1} xl={2}>
-        <Col className="product-detail-img-container">
-          <img
-            src={productsFound?.productImgs[0]}
-            alt="productImg"
-            className="product-detail-img"
-          />
+        <Col className="product-detail-img-container">          
+          <Carousel variant="dark">
+            <Carousel.Item interval={5000}>
+            <img
+              src={productsFound?.productImgs[0]}
+              alt="productImg"
+              className="product-detail-img"
+            />
+            </Carousel.Item>
+            <Carousel.Item interval={5000}>
+              <img
+                src={productsFound?.productImgs[1]}
+                alt="productImg"
+                className="product-detail-img"
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={5000}>
+              <img
+                src={productsFound?.productImgs[2]}
+                alt="productImg"
+                className="product-detail-img"
+              />
+            </Carousel.Item>
+          </Carousel>
         </Col>
         <Col className="product-detail-description-container">
           <p className="product-detail-description">
@@ -68,10 +86,20 @@ const ProductDetail = () => {
             </Col>
             <Col className="product-detail-quantity">
               Quantity
-              <input type="number" min={1} max={20} value={quantity} onChange={e => setQuantity(e.target.value)}/>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
             </Col>
           </Row>
-          <Button onClick={addToCart} variant="danger" style={{ marginTop: "1rem", width: "100%" }}>
+          <Button
+            onClick={addToCart}
+            variant="danger"
+            style={{ marginTop: "1rem", width: "100%" }}
+          >
             Add to cart
           </Button>
         </Col>
